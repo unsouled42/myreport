@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fidelity TAS 5.0 – QA Report</title>
+
+  <!-- Docsify Theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css" />
+
+  <style>
+    body {
+      font-family: "Segoe UI", Roboto, sans-serif;
+      padding-top: 70px;
+      margin: 0;
+    }
+
+    img {
+      cursor: zoom-in;
+      border-radius: 4px;
+      margin: 8px 0 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+      max-width: 100%;
+    }
+
+    figure {
+      margin: 1.5em 0;
+      text-align: center;
+    }
+
+    figcaption {
+      margin-top: 0.5em;
+      font-size: 14px;
+      color: #555;
+      font-style: italic;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      font-size: 13px;
+      color: #888;
+      text-align: center;
+    }
+
+    /* Fixed Navigation Bar */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border-bottom: 1px solid #e0e0e0;
+      z-index: 1000;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-container {
+      margin-left: 300px; /* adjust if no sidebar */
+      max-width: 960px;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .nav-container a {
+      font-size: 14px;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 500;
+      color: #333;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-container a:hover {
+      background-color: #f0f0f0;
+    }
+
+    .nav-tab-active {
+      background: #e8f5e9 !important;
+      font-weight: 600;
+      color: #2e7d32 !important;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .nav-container {
+        margin-left: 0;
+        padding: 10px 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      body {
+        padding-top: 110px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- App content loaded by Docsify -->
+  <div id="app">Loading report...</div>
+
+  <!-- Fixed Navigation Bar -->
+  <nav>
+    <div class="nav-container">
+      <a id="nav-overview" href="#/">🏠 Overview</a>
+      <a id="nav-dev" href="#/dev/">🧪 DEV</a>
+      <a id="nav-uat" href="#/uat/">🚀 UAT</a>
+      <a id="nav-prod" href="#/prod/">✅ PROD</a>
+    </div>
+  </nav>
+
+  <!-- JS Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/docsify-updated.min.js"></script>
+
+  <script>
+    window.$docsify = {
+      name: 'Unit Testing Report',
+      repo: '',
+      loadSidebar: false,
+      loadNavbar: false,
+      homepage: 'README.md',
+      subMaxLevel: 2,
+      themeColor: '#42b983',
+      alias: {
+        '/dev/': '/dev/report.md',
+        '/uat/': '/uat/report.md',
+        '/prod/': '/prod/report.md'
+      },
+      updated: {
+        text: 'Last updated:',
+        format: '{YYYY}-{MM}-{DD} {HH}:{mm}',
+        type: 'datetime'
+      },
+      plugins: [
+        function (hook, vm) {
+          hook.doneEach(function () {
+            // Zoom
+            if (window.mediumZoomInstance) {
+              window.mediumZoomInstance.detach();
+            }
+            window.mediumZoomInstance = mediumZoom('img:not(a img)', {
+              margin: 24,
+              background: 'rgba(0,0,0,0.85)',
+              scrollOffset: 0,
+              transitionDuration: 150
+            });
+
+            // Highlight current nav tab
+            const routes = ['/', '/dev/', '/uat/', '/prod/'];
+            routes.forEach(r => {
+              const id = 'nav-' + (r === '/' ? 'overview' : r.replaceAll('/', ''));
+              const link = document.getElementById(id);
+              if (link) {
+                link.classList.toggle('nav-tab-active', vm.route.path.startsWith(r));
+              }
+            });
+          });
+        }
+      ]
+    };
+  </script>
+</body>
+</html>
