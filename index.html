@@ -57,7 +57,7 @@
     }
 
     .nav-container {
-      margin-left: 300px; /* adjust if no sidebar */
+      margin-left: 300px;
       max-width: 960px;
       padding: 10px 20px;
       display: flex;
@@ -118,25 +118,25 @@
   </nav>
 
   <!-- JS Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js  "></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/docsify-updated.min.js  "></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/docsify-updated.min.js"></script>
 
   <script>
     window.$docsify = {
-      name: 'Unit Testing Report',
+      name: 'Fidelity TAS 5.0 – QA & Performance Testing',
       repo: '',
-      loadSidebar: false,
+      loadSidebar: true,  // ✅ Enable sidebar
       loadNavbar: false,
       homepage: 'README.md',
       subMaxLevel: 2,
       themeColor: '#42b983',
       alias: {
-    '/dev/': '/dev/report.md',
-    '/uat/': '/uat/report.md',
-    '/prod/': '/prod/report.md',
-    '/uat/performance-testing.md': '/uat/perf_testing.md'  // ✅ Correct path
-      }
+        '/dev/': '/dev/report.md',
+        '/uat/': '/uat/report.md',
+        '/prod/': '/prod/report.md',
+        '/uat/performance-testing.md': '/uat/performance-testing.md'  // ✅ Fixed: comma + correct path
+      },
       updated: {
         text: 'Last updated:',
         format: '{YYYY}-{MM}-{DD} {HH}:{mm}',
