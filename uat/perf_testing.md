@@ -230,11 +230,6 @@ Users expect fast access to data; delays indicate inefficient rendering or heavy
 Explore live charts and detailed metrics:  
 👉 [Open Interactive Dashboard](./dashboard/index.html)
 
-<figure>
-  <img src="./dashboard/screenshot.png" alt="Interactive Performance Dashboard">
-  <figcaption><strong>Chart:</strong> Overview of the interactive JMeter performance dashboard</figcaption>
-</figure>
-
 
 ---
 
