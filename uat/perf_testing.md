@@ -240,7 +240,7 @@ Explore live charts and detailed metrics:
 
 ## 📎 Attachments
 
-- [🖥️ Interactive Dashboard](/dashboard/) – HTML Performance Dashboard (generated via JMeter)  
+- [🖥️ Interactive Dashboard](./dashboard/index.html) – HTML Performance Dashboard (generated via JMeter)  
 
 ---
 
