@@ -10,6 +10,6 @@
 
 - [🚀 UAT Environment](/uat/report.md)
   - [Functional Tests](/uat/report.md)
-  - [🔐 Performance Testing](/uat/performance-testing.md)  <!-- NEW LINK -->
+  - [🔐 Performance Testing](/uat/performance-testing.md)
 
 - [✅ PROD Environment](/prod/report.md)
