@@ -50,7 +50,7 @@ We are actively validating TRIRIGA's **performance, scalability, and stability**
 - 📈 **Throughput & Error Rate** (0% errors over 300 iterations)
 - 🔄 **API Responsiveness** (OSLC endpoints)
 
-👉 [View UAT Performance Test Report](#/uat/perf_testing)
+👉 [View UAT Performance Test Report](#/uat/perf_testing.md)
 
 ---
 
