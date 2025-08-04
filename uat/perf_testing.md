@@ -1,4 +1,4 @@
-# 🚀 TRIRIGA Application Suite 5.0 – Performance Test Report
+# TRIRIGA Application Suite 5.0 – Performance Test Report
 
 **Prepared by:** Souleiman Bentouyer  
 **Environment:** UAT (`fil-triuat-fil-uat.almhosting.com`)  
@@ -31,7 +31,6 @@ This test establishes the **baseline performance benchmark** for TRIRIGA UAT and
 | **UAT** | ✅ PASSED | 2025-04-05 | [View Report](#) |
 | **PROD** | 🔴 Not Tested | — | — |
 
-> 🔍 *Note: This report covers UAT only. PROD performance testing requires a change advisory board (CAB) approval.*
 
 ---
 
