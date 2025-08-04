@@ -69,7 +69,7 @@ Where *t* is the target response time threshold (e.g., 1 second).
 | **Report Output** | `.jtl`, HTML Dashboard |
 
 <figure>
-  <img src="./uat/graphs/PT001-Threadgroup.png" alt="JMeter Thread Group Settings">
+  <img src="/uat/graphs/PT001-Threadgroup.png" alt="JMeter Thread Group Settings">
   <figcaption><strong>Chart:</strong> JMeter Thread Group Settings</figcaption>
 </figure>
 
