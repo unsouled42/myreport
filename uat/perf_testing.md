@@ -228,7 +228,7 @@ Users expect fast access to data; delays indicate inefficient rendering or heavy
 ## 🖥️ Interactive Performance Dashboard
 
 Explore live charts and detailed metrics:  
-👉 [Open Interactive Dashboard](/uat/dashboardindex.html)
+👉 [Open Interactive Dashboard](./dashboard/index.html)
 
 <figure>
   <img src="./dashboard/screenshot.png" alt="Interactive Performance Dashboard">
