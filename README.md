@@ -1,9 +1,12 @@
-# Fidelity TAS 5.0 – Unit Testing Portal
+# Fidelity TAS 5.0 – QA & Performance Testing Portal
 
-This documentation centralizes all test results executed across environments to validate functional continuity, data integrity, and system behavior following the TAS upgrade.
+This portal centralizes all test results across environments to validate:
+- Functional continuity after the TAS 5.0 upgrade
+- System performance under load
+- Data integrity and API reliability
+- Readiness for production rollout
 
 ---
-
 
 <div align="center" style="margin-top: 20px;">
 
@@ -36,8 +39,20 @@ This documentation centralizes all test results executed across environments to 
 
 </div>
 
+---
+
+## 🔧 Current Focus: Performance Validation (UAT)
+
+We are actively validating TRIRIGA's **performance, scalability, and stability** in UAT with focus on:
+
+- 🔐 **Login & Session Handling** (CSRF, cookie management)
+- 🚀 **Response Time** under load (avg: 56 ms)
+- 📈 **Throughput & Error Rate** (0% errors over 300 iterations)
+- 🔄 **API Responsiveness** (OSLC endpoints)
+
+👉 [View UAT Performance Test Report](#/uat/perf_testing)
 
 ---
 
-  **Maintained by:** Souleiman Bentouyer  
-  **Period:** June–July 2025  
+**Maintained by:** Souleiman Bentouyer  
+**Testing Period:** June–July 2025  
