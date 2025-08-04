@@ -86,7 +86,7 @@ Each iteration simulates a real end-user session:
 5. **GET /tririga/app/tririga/config?reportTemplId=2956&associatedId=-1&manager=1...** → Fetch Employee List data via API  
 
 <figure>
-  <img src="./graphs/JSON-Extractor.png" alt="JSON Extractor Config">
+  <img src="/uat/graphs/JSON-Extractor.png" alt="JSON Extractor Config">
   <figcaption><strong>Chart:</strong> JSON Extractor Configuration for CSRF Token</figcaption>
 </figure>
 
@@ -133,12 +133,12 @@ Slow or failing logins directly impact user adoption and system usability.
 One outlier at 470 ms likely due to initial session setup or network jitter. No impact on overall stability.
 
 <figure>
-  <img src="./graphs/PT001-login-response.png" alt="Login Response Time Over Time">
+  <img src="/uat/graphs/PT001-login-response.png" alt="Login Response Time Over Time">
   <figcaption><strong>Chart:</strong> Login response time remains stable after initial spike</figcaption>
 </figure>
 
 <figure>
-  <img src="./graphs/PT001-Throughput.png" alt="Throughput Over Time">
+  <img src="/uat/graphs/PT001-Throughput.png" alt="Throughput Over Time">
   <figcaption><strong>Chart:</strong> Throughput over time for login requests</figcaption>
 </figure>
 
@@ -166,17 +166,17 @@ First impression is critical; slow dashboards reduce productivity.
 Dashboard loads are fast and consistent. No rendering or backend delays observed.
 
 <figure>
-  <img src="./graphs/PT002-200-OK.png" alt="Successful Login Response">
+  <img src="/uat/graphs/PT002-200-OK.png" alt="Successful Login Response">
   <figcaption><strong>Chart:</strong> Successful login response (HTTP 200 OK)</figcaption>
 </figure>
 
 <figure>
-  <img src="./graphs/PT002-HTMLresponse.png" alt="Dashboard HTML Response">
+  <img src="/uat/graphs/PT002-HTMLresponse.png" alt="Dashboard HTML Response">
   <figcaption><strong>Chart:</strong> HTML response body of the main TRIRIGA dashboard</figcaption>
 </figure>
 
 <figure>
-  <img src="./graphs/PT002-Throughput_loading.png" alt="Throughput Over Time">
+  <img src="/uat/graphs/PT002-Throughput_loading.png" alt="Throughput Over Time">
   <figcaption><strong>Chart:</strong> Throughput over time for dashboard load</figcaption>
 </figure>
 
@@ -206,7 +206,7 @@ Users expect fast access to data; delays indicate inefficient rendering or heavy
 - No JavaScript blocking observed (assumed from size)  
 
 <figure>
-  <img src="./graphs/PT003-nav-response.png" alt="Response Time Over Time">
+  <img src="/uat/graphs/PT003-nav-response.png" alt="Response Time Over Time">
   <figcaption><strong>Chart:</strong> Consistent response time across 300 iterations</figcaption>
 </figure>
 
@@ -221,44 +221,26 @@ Users expect fast access to data; delays indicate inefficient rendering or heavy
 ✅ **No performance degradation over 300 iterations**
 
 ⚠️ **Observation:**  
-- Login max time (470 ms) is an outlier — monitor under real concurrency.  
-- All responses return HTML, not JSON — consider lightweight APIs for future scalability.  
-
-🟢 **Verdict:** **PASS – UAT Environment is Performance-Ready for Next Phase**
+- Login max time (470 ms) is an outlier — monitor under real concurrency.
 
 ---
 
 ## 🖥️ Interactive Performance Dashboard
 
 Explore live charts and detailed metrics:  
-👉 [Open Interactive Dashboard](/dashboard/index.html)
+👉 [Open Interactive Dashboard](/uat/dashboardindex.html)
 
 <figure>
   <img src="./dashboard/screenshot.png" alt="Interactive Performance Dashboard">
   <figcaption><strong>Chart:</strong> Overview of the interactive JMeter performance dashboard</figcaption>
 </figure>
 
----
-
-## 🧭 Next Steps & Recommendations
-
-| Action | Owner | Timeline |
-|------|-------|---------|
-| Add **think time (2–5 sec)** between steps | QA Team | Immediate |
-| Run **50-user concurrent test** | Performance Team | Next Sprint |
-| Enable **PerfMon Plugin** for CPU/Memory monitoring | DevOps | Phase 2 |
-| Test **Work Order creation under load** | QA Team | Future |
-| Validate **logout and session cleanup** | QA Team | Future |
-| Automate report generation via **CI/CD (Jenkins)** | DevOps | Roadmap |
 
 ---
 
 ## 📎 Attachments
 
-- [📥 TRIRIGA_Login_Perf_Test.jmx](/assets/TRIRIGA_Login_Perf_Test.jmx) – JMeter test plan  
-- [📊 results.jtl](/assets/results.jtl) – Raw performance data  
 - [🖥️ Interactive Dashboard](/dashboard/) – HTML Performance Dashboard (generated via JMeter)  
-- [🖼️ Full Graphs Collection](/graphs/) – Complete set of performance charts  
 
 ---
 
@@ -266,9 +248,8 @@ Explore live charts and detailed metrics:
 
 | Version | Date | Author | Changes |
 |--------|------|--------|--------|
-| 1.0 | 2025-04-05 | Souleiman Bentouyer | Initial release |
+| 1.0 | 2025-07-28 | Souleiman Bentouyer | Initial release |
 
 ---
 
-© 2025 MACS – Performance Engineering & QA Team  
-*Document generated using JMeter & best practices in enterprise performance testing.*
+© 2025 MACS
