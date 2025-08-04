@@ -47,8 +47,8 @@ We are actively validating TRIRIGA's **performance, scalability, and stability**
 
 - 🔐 **Login & Session Handling** (CSRF, cookie management)
 - 🚀 **Response Time** under load (avg: 56 ms)
-- 📈 **Throughput & Error Rate** (0% errors over 300 iterations)
-- 🔄 **API Responsiveness** (OSLC endpoints)
+- 📈 **Throughput & Error Rate** % errors over n iterations
+- 🔄 **API Responsiveness**  Endpoints
 
 👉 [View UAT Performance Test Report](#/uat/perf_testing.md)
 
