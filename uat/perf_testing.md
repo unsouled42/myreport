@@ -228,14 +228,14 @@ Users expect fast access to data; delays indicate inefficient rendering or heavy
 ## 🖥️ Interactive Performance Dashboard
 
 Explore live charts and detailed metrics:  
-👉 [Open Interactive Dashboard](./dashboard/index.html)
+👉 [Open Interactive Dashboard](https://uatupdate.netlify.app/dashboard/)
 
 
 ---
 
 ## 📎 Attachments
 
-- [🖥️ Interactive Dashboard](/dashboard/) – HTML Performance Dashboard (generated via JMeter)  
+- [🖥️ Interactive Dashboard](https://uatupdate.netlify.app/dashboard/) – HTML Performance Dashboard (generated via JMeter)  
 
 ---
 
