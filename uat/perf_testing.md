@@ -23,17 +23,6 @@ This test establishes the **baseline performance benchmark** for TRIRIGA UAT and
 
 ---
 
-## 🌐 Environment Summary
-
-| Environment | Status | Last Test | Link |
-|-----------|--------|----------|------|
-| **DEV** | 🟡 In Progress | 2025-04-03 | — |
-| **UAT** | ✅ PASSED | 2025-04-05 | [View Report](#) |
-| **PROD** | 🔴 Not Tested | — | — |
-
-
----
-
 ## 📊 Apdex (Application Performance Index)
 
 The **Apdex score** measures user satisfaction with application performance, converting raw response times into meaningful business metrics.
@@ -53,7 +42,7 @@ Where *t* is the target response time threshold (e.g., 1 second).
 
 ---
 
-## 🧪 Test Scope
+## Test Scope
 
 | Workflow | Included | Tool | Purpose |
 |--------|--------|------|--------|
@@ -64,7 +53,6 @@ Where *t* is the target response time threshold (e.g., 1 second).
 | Concurrent User Simulation | ✅ | 1 thread × 300 loops | Baseline functional load |
 | Multi-User Load | ❌ | — | Planned in Phase 2 |
 | Work Order / Asset Actions | ❌ | — | Future scope |
-| Logout Validation | ❌ | — | To be added |
 
 ---
 
@@ -76,14 +64,12 @@ Where *t* is the target response time threshold (e.g., 1 second).
 | **Threads (Users)** | 1 (Baseline) |
 | **Ramp-Up Period** | 0 sec |
 | **Loop Count** | 300 |
-| **Test Duration** | ~10 minutes |
 | **Think Time** | None (to be added in next phase) |
 | **Execution Mode** | Non-GUI (CLI-ready) |
-| **Backend Monitoring** | Not enabled (Future: PerfMon) |
 | **Report Output** | `.jtl`, HTML Dashboard |
 
 <figure>
-  <img src="./graphs/PT001-Threadgroup.png" alt="JMeter Thread Group Settings">
+  <img src="./uat/graphs/PT001-Threadgroup.png" alt="JMeter Thread Group Settings">
   <figcaption><strong>Chart:</strong> JMeter Thread Group Settings</figcaption>
 </figure>
 
