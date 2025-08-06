@@ -1,4 +1,4 @@
-# 🚀 TRIRIGA Application Suite 5.0 – Performance Test Report
+# TRIRIGA Application Suite 5.0 – Performance Test Report
 
 **Prepared by:** Souleiman Bentouyer  
 **Environment:** UAT (`fil-triuat-fil-uat.almhosting.com`)  
@@ -9,7 +9,7 @@
 
 ---
 
-## 📘 Objective
+## Objective
 
 Validate the **performance, stability, and scalability** of the core user journey in TRIRIGA under **100 concurrent users**, focusing on:
 
@@ -54,7 +54,7 @@ All users experienced response times within the "satisfied" range.
 
 ---
 
-## 🧰 Test Configuration
+## Test Configuration
 
 | Parameter | Value |
 |--------|-------|
@@ -74,7 +74,7 @@ All users experienced response times within the "satisfied" range.
 
 ---
 
-## 🔄 Test Workflow
+## Test Workflow
 
 Each thread simulates a real end-user session:
 
