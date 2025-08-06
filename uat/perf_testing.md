@@ -193,15 +193,20 @@ Users expect fast access to data; delays indicate inefficient rendering or heavy
 | **Error Rate** | 0.00% | 0% | ✅ |
 | **Throughput** | 9.8 req/sec | ≥ 3 req/sec | ✅ |
 
+<figure>
+  <img src="/uat/graphs/PT003-aggregate-report.png" alt="Aggregate Report">
+  <figcaption><strong>Chart:</strong> Aggregate Report showing key performance metrics</figcaption>
+</figure>
+
+<figure>
+  <img src="/uat/graphs/PT003-samples.png" alt="GET Employee List Samples">
+  <figcaption><strong>Chart:</strong> Successful GET Employee List requests for all 100 users + consistent response time c</figcaption>
+</figure>
+
 **Payload Analysis:**  
 - Response: HTML (3.3 KB) — lightweight  
 - No external API calls detected in flow  
 - No JavaScript blocking observed (assumed from size)  
-
-<figure>
-  <img src="/uat/graphs/PT003-nav-response.png" alt="Response Time Over Time">
-  <figcaption><strong>Chart:</strong> Consistent response time across 100 users</figcaption>
-</figure>
 
 ---
 
@@ -232,10 +237,9 @@ Explore live charts and detailed metrics:
 ## 🔄 Revision History
 
 | Version | Date | Author | Changes |
-|--------|------|--------|--------|
+|--------|------|--------|--------| 
 | 1.0 | 2025-07-28 | Souleiman Bentouyer | Initial release |
 
 ---
 
 © 2025 MACS – Performance Engineering & QA Team  
-*Document generated using JMeter & best practices in enterprise performance testing.*
