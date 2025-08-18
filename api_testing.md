@@ -176,10 +176,10 @@ PUT /tririga/rest/DeskBooking?action=deskprogression
 
 ```mermaid
 graph TD
-    A[Login] --> B[Get User Profile]
-    B --> C[Floors Verbose]
-    C --> D[Book a Desk]
-    D --> E[Desk Progression]
+  A[Login] --> B[Get User Profile]
+  B --> C[Floors Verbose]
+  C --> D[Book a Desk]
+  D --> E[Desk Progression]
 ```
 
 **Flow Notes:**
