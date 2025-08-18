@@ -57,11 +57,15 @@
       search: 'auto',
 
       alias: {
-        '/dev/':  '/dev/report.md',
-        '/uat/':  '/uat/report.md',
+        '/dev/': '/dev/report.md',
+        '/uat/': '/uat/report.md',
         '/prod/': '/prod/report.md',
         '/uat/perf_testing.md': '/uat/perf_testing.md',
-        '/api/': '/api_testing.md'     /* friendly route for API doc */
+        '/api/': '/api_testing.md',
+
+        /* ✅ Fix 404s when routing into subpaths */
+        '/.*/_sidebar.md': '/_sidebar.md',
+        '/.*/_navbar.md': '/_navbar.md'
       },
 
       updated: {
@@ -70,10 +74,9 @@
         type: 'datetime'
       },
 
-      /* Mermaid plugin options */
+      /* Mermaid options */
       mermaidConfig: { startOnLoad: true, theme: 'default' },
 
-      /* Custom plugins */
       plugins: [
         function (hook, vm) {
           hook.doneEach(function () {
@@ -98,10 +101,9 @@
       ]
     };
   </script>
-  
-  <!-- JS Libraries (load AFTER the config) -->
+
+  <!-- JS Libraries (AFTER config) -->
   <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
-   <!-- Docsify core -->
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/docsify-updated.min.js"></script>
@@ -111,3 +113,4 @@
   <script src="https://cdn.jsdelivr.net/npm/docsify-mermaidjs@latest/dist/docsify-mermaidjs.min.js"></script>
 </body>
 </html>
+
