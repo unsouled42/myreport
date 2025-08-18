@@ -1,4 +1,4 @@
-# TRIRIGA Desk Booking – API Test Guide
+# API Testing
 
 **Prepared for:** Fidelity TAS 5.0 API Validation  
 **Tool:** Postman Collection & Environment  
