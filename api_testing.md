@@ -54,7 +54,7 @@ GET /tririga/oslc/login?USERNAME={{username}}&PASSWORD={{password}}
 - Cookie: JSESSIONID (required for all subsequent requests)
 
 <figure>
-  <img src="./screenshots/jeissionid.png" alt="successful Login response showing JSESSIONID">
+  <img src="./screenshots/JESSIONID.png" alt="successful Login response showing JSESSIONID">
   <figcaption><strong>Graph:</strong> successful Login response showing JSESSIONID</figcaption>
 </figure>
 
