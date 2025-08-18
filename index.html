@@ -13,7 +13,6 @@
     img { cursor: zoom-in; border-radius: 4px; margin: 8px 0 16px; box-shadow: 0 2px 12px rgba(0,0,0,.15); max-width: 100%; }
     figure { margin: 1.5em 0; text-align: center; }
     figcaption { margin-top: .5em; font-size: 14px; color: #555; font-style: italic; }
-    footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 13px; color: #888; text-align: center; }
 
     /* Fixed Navigation Bar */
     nav { position: fixed; top: 0; left: 0; width: 100%; background: #fff; border-bottom: 1px solid #e0e0e0; z-index: 1000; box-shadow: 0 1px 6px rgba(0,0,0,.05); }
@@ -22,7 +21,6 @@
     .nav-container a:hover { background: #f0f0f0; }
     .nav-tab-active { background: #e8f5e9 !important; font-weight: 600; color: #2e7d32 !important; }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .nav-container { margin-left: 0; padding: 10px 12px; flex-wrap: wrap; justify-content: center; gap: 10px; }
       body { padding-top: 110px; }
@@ -30,7 +28,6 @@
   </style>
 </head>
 <body>
-  <!-- App container (Docsify mounts here) -->
   <div id="app">Loading report...</div>
 
   <!-- Fixed Navigation Bar -->
@@ -44,7 +41,7 @@
     </div>
   </nav>
 
-  <!-- Docsify configuration (must be BEFORE script imports) -->
+  <!-- Docsify config BEFORE scripts -->
   <script>
     window.$docsify = {
       name: 'Fidelity TAS 5.0 – QA & Performance Testing',
@@ -62,8 +59,7 @@
         '/prod/': '/prod/report.md',
         '/uat/perf_testing.md': '/uat/perf_testing.md',
         '/api/': '/api_testing.md',
-
-        /* ✅ Fix 404s when routing into subpaths */
+        /* Fix 404s when routing into subpaths */
         '/.*/_sidebar.md': '/_sidebar.md',
         '/.*/_navbar.md': '/_navbar.md'
       },
@@ -77,25 +73,48 @@
       /* Mermaid options */
       mermaidConfig: { startOnLoad: true, theme: 'default' },
 
+      /* Custom plugins */
       plugins: [
         function (hook, vm) {
+          // Re-apply zoom + nav highlighting after each route
           hook.doneEach(function () {
-            // Medium Zoom for images
             if (window.mediumZoomInstance) window.mediumZoomInstance.detach();
             window.mediumZoomInstance = mediumZoom('img:not(a img)', {
-              margin: 24,
-              background: 'rgba(0,0,0,0.85)',
-              scrollOffset: 0,
-              transitionDuration: 150
+              margin: 24, background: 'rgba(0,0,0,0.85)', scrollOffset: 0, transitionDuration: 150
             });
 
-            // Highlight current nav tab
             const routes = ['/', '/dev/', '/uat/', '/prod/', '/api/'];
             routes.forEach(r => {
               const id = 'nav-' + (r === '/' ? 'overview' : r.replaceAll('/', ''));
               const link = document.getElementById(id);
               if (link) link.classList.toggle('nav-tab-active', vm.route.path.startsWith(r));
             });
+          });
+
+          // 🔧 Manual Mermaid renderer: convert fenced blocks to <div class="mermaid"> and init
+          hook.doneEach(function () {
+            try {
+              var blocks = document.querySelectorAll('pre[data-lang="mermaid"]');
+              blocks.forEach(function (pre) {
+                // Skip if already converted
+                if (pre.dataset.mermaidProcessed === 'true') return;
+                var code = pre.querySelector('code');
+                var graph = code ? code.textContent : pre.textContent;
+                var container = document.createElement('div');
+                container.className = 'mermaid';
+                container.textContent = graph;
+                pre.parentNode.replaceChild(container, pre);
+                container.dataset.mermaidProcessed = 'true';
+              });
+
+              if (window.mermaid) {
+                // (Re)initialize on each page
+                window.mermaid.initialize(vm.config.mermaidConfig || { startOnLoad: true });
+                window.mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+              }
+            } catch (e) {
+              console.error('Mermaid render error:', e);
+            }
           });
         }
       ]
@@ -108,9 +127,7 @@
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/docsify-updated.min.js"></script>
 
-  <!-- ✅ Mermaid support (use docsify-mermaidjs) -->
+  <!-- Mermaid core ONLY (no external docsify-mermaid plugin needed) -->
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-mermaidjs@latest/dist/docsify-mermaidjs.min.js"></script>
 </body>
 </html>
-
