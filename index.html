@@ -6,31 +6,31 @@
   <title>Fidelity TAS 5.0 – QA Report</title>
 
   <!-- Docsify Theme -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css" />
 
   <style>
-    body { font-family:"Segoe UI", Roboto, sans-serif; padding-top:70px; margin:0; }
-    img { cursor:zoom-in; border-radius:4px; margin:8px 0 16px; box-shadow:0 2px 12px rgba(0,0,0,.15); max-width:100%; }
-    figure { margin:1.5em 0; text-align:center; }
-    figcaption { margin-top:.5em; font-size:14px; color:#555; font-style:italic; }
-    footer { margin-top:40px; padding-top:20px; border-top:1px solid #eee; font-size:13px; color:#888; text-align:center; }
+    body { font-family: "Segoe UI", Roboto, sans-serif; padding-top: 70px; margin: 0; }
+    img { cursor: zoom-in; border-radius: 4px; margin: 8px 0 16px; box-shadow: 0 2px 12px rgba(0,0,0,.15); max-width: 100%; }
+    figure { margin: 1.5em 0; text-align: center; }
+    figcaption { margin-top: .5em; font-size: 14px; color: #555; font-style: italic; }
+    footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-size: 13px; color: #888; text-align: center; }
 
     /* Fixed Navigation Bar */
-    nav { position:fixed; top:0; left:0; width:100%; background:#fff; border-bottom:1px solid #e0e0e0; z-index:1000; box-shadow:0 1px 6px rgba(0,0,0,.05); }
-    .nav-container { margin-left:300px; max-width:960px; padding:10px 20px; display:flex; justify-content:center; gap:16px; align-items:center; }
-    .nav-container a { font-size:14px; text-decoration:none; padding:6px 14px; border-radius:6px; font-weight:500; color:#333; transition:background .2s,color .2s; white-space:nowrap; }
-    .nav-container a:hover { background:#f0f0f0; }
-    .nav-tab-active { background:#e8f5e9 !important; font-weight:600; color:#2e7d32 !important; }
+    nav { position: fixed; top: 0; left: 0; width: 100%; background: #fff; border-bottom: 1px solid #e0e0e0; z-index: 1000; box-shadow: 0 1px 6px rgba(0,0,0,.05); }
+    .nav-container { margin-left: 300px; max-width: 960px; padding: 10px 20px; display: flex; justify-content: center; gap: 16px; align-items: center; }
+    .nav-container a { font-size: 14px; text-decoration: none; padding: 6px 14px; border-radius: 6px; font-weight: 500; color: #333; transition: background .2s, color .2s; white-space: nowrap; }
+    .nav-container a:hover { background: #f0f0f0; }
+    .nav-tab-active { background: #e8f5e9 !important; font-weight: 600; color: #2e7d32 !important; }
 
     /* Responsive */
-    @media (max-width:768px){
-      .nav-container { margin-left:0; padding:10px 12px; flex-wrap:wrap; justify-content:center; gap:10px; }
-      body { padding-top:110px; }
+    @media (max-width: 768px) {
+      .nav-container { margin-left: 0; padding: 10px 12px; flex-wrap: wrap; justify-content: center; gap: 10px; }
+      body { padding-top: 110px; }
     }
   </style>
 </head>
 <body>
-  <!-- App content loaded by Docsify -->
+  <!-- App container (Docsify mounts here) -->
   <div id="app">Loading report...</div>
 
   <!-- Fixed Navigation Bar -->
@@ -40,54 +40,54 @@
       <a id="nav-dev" href="#/dev/">🧪 DEV</a>
       <a id="nav-uat" href="#/uat/">🚀 UAT</a>
       <a id="nav-prod" href="#/prod/">✅ PROD</a>
-      <!-- NEW: API Tests tab -->
       <a id="nav-api" href="#/api/">🔌 API Tests</a>
     </div>
   </nav>
 
-  <!-- JS Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/docsify-updated.min.js"></script>
-  <!-- ✅ Mermaid support -->
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/docsify-mermaid@2/dist/docsify-mermaid.min.js"></script>
-
+  <!-- Docsify configuration (must be BEFORE script imports) -->
   <script>
     window.$docsify = {
       name: 'Fidelity TAS 5.0 – QA & Performance Testing',
       repo: '',
+      homepage: 'README.md',
       loadSidebar: true,
       loadNavbar: false,
-      homepage: 'README.md',
       subMaxLevel: 2,
       themeColor: '#42b983',
       search: 'auto',
+
       alias: {
         '/dev/':  '/dev/report.md',
         '/uat/':  '/uat/report.md',
         '/prod/': '/prod/report.md',
         '/uat/perf_testing.md': '/uat/perf_testing.md',
-        /* NEW: friendly route for API doc */
-        '/api/': '/api_testing.md'
+        '/api/': '/api_testing.md'     /* friendly route for API doc */
       },
+
       updated: {
         text: 'Last updated:',
         format: '{YYYY}-{MM}-{DD} {HH}:{mm}',
         type: 'datetime'
       },
+
+      /* Mermaid plugin options */
+      mermaidConfig: { startOnLoad: true, theme: 'default' },
+
+      /* Custom plugins */
       plugins: [
         function (hook, vm) {
           hook.doneEach(function () {
-            // Zoom
+            // Medium Zoom for images
             if (window.mediumZoomInstance) window.mediumZoomInstance.detach();
             window.mediumZoomInstance = mediumZoom('img:not(a img)', {
-              margin: 24, background: 'rgba(0,0,0,0.85)', scrollOffset: 0, transitionDuration: 150
+              margin: 24,
+              background: 'rgba(0,0,0,0.85)',
+              scrollOffset: 0,
+              transitionDuration: 150
             });
 
             // Highlight current nav tab
-            const routes = ['/', '/dev/', '/uat/', '/prod/', '/api/']; // ← include API
+            const routes = ['/', '/dev/', '/uat/', '/prod/', '/api/'];
             routes.forEach(r => {
               const id = 'nav-' + (r === '/' ? 'overview' : r.replaceAll('/', ''));
               const link = document.getElementById(id);
@@ -98,5 +98,15 @@
       ]
     };
   </script>
+
+  <!-- JS Libraries (load AFTER the config) -->
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/docsify-updated.min.js"></script>
+
+  <!-- Mermaid support -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-mermaid@2/dist/docsify-mermaid.min.js"></script>
 </body>
 </html>
