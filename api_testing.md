@@ -170,8 +170,6 @@ PUT /tririga/rest/DeskBooking?action=deskprogression
 - Response: 200 OK
 - Desk status updated (deskStatus in response)
 
-📸 *Insert screenshot of DeskProgression response.*
-
 ---
 
 # ✅ Flow Summary
