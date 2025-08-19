@@ -187,3 +187,169 @@ graph TD
 - **Floors** → Used to capture locationId, floorNumber, groupId
 - **Book Desk** → Mandatory for reservations
 - **Desk Progression** → Only valid after successful booking
+
+---
+
+# ⚠️ 6. Negative & Edge Case Scenarios
+
+These scenarios ensure the Desk Booking API correctly handles invalid inputs and business rules.
+
+## 👤 6.1 Book Desk for Another User (Intended User)
+
+```http
+POST /tririga/rest/CreateBooking
+```
+
+**Body Example:**
+```json
+{
+    "userId": "23514135",
+    "deskId": "24212236",
+    "bookingType": "Whole Day",
+    "dateList": ["2025-08-20"],
+    "intendedUserDetails": {
+        "userId": "A778250"
+    }
+}
+```
+
+**Expected:**
+- Response: 200 OK or 201 Created
+- Response contains `bookingId` for intended user
+
+---
+
+## 🔁 6.2 Duplicate Booking (Same Day)
+
+```http
+POST /tririga/rest/CreateBooking
+```
+
+**Body Example:**
+```json
+{
+    "userId": "23514135",
+    "deskId": "24212236",
+    "bookingType": "Whole Day",
+    "dateList": ["2025-08-20"]
+}
+```
+
+*(Executed twice with same date/deskId)*
+
+**Expected:**
+- Response: `400 Bad Request`
+- Error message: `"Same Day Booking exists"`
+
+---
+
+## ⏳ 6.3 Past Date Booking
+
+```http
+POST /tririga/rest/CreateBooking
+```
+
+**Body Example:**
+```json
+{
+    "userId": "23514135",
+    "deskId": "24212236",
+    "bookingType": "Whole Day",
+    "dateList": ["2024-08-20"]
+}
+```
+
+**Expected:**
+- Response: `400 Bad Request`
+- Error message: `"Past date not allowed"`
+
+---
+
+## 📆 6.4 Weekend Booking
+
+```http
+POST /tririga/rest/CreateBooking
+```
+
+**Body Example:**
+```json
+{
+    "userId": "23514135",
+    "deskId": "24212236",
+    "bookingType": "Whole Day",
+    "dateList": ["2025-08-23"]
+}
+```
+
+**Expected:**
+- Response: `400 Bad Request`
+- Error message: `"Weekend booking not allowed"`
+
+---
+
+## ❌ 6.5 Invalid DeskId
+
+```http
+POST /tririga/rest/CreateBooking
+```
+
+**Body Example:**
+```json
+{
+    "userId": "23514135",
+    "deskId": "99999999",
+    "bookingType": "Whole Day",
+    "dateList": ["2025-08-20"]
+}
+```
+
+**Expected:**
+- Response: `400 Bad Request`
+- Error code: `"TRG-XXX"` (Invalid deskId)
+
+---
+
+## 📧 6.6 Invalid User Profile (Email)
+
+```http
+GET /tririga/rest/UserProfile?email=not_a_valid_email@test.com
+```
+
+**Expected:**
+- Response: `404 Not Found` or `400 Bad Request`
+- Error message: `"Invalid user email"`
+
+---
+
+# 📊 7. Validation Queries (Follow-up)
+
+## 7.1 Verify Booking Exists
+
+```http
+GET /tririga/rest/GetBookings?userId={{userId}}&recordDate={{date1}}&pageNumber=1&pageSize=50
+```
+
+**Expected:**
+- Response: 200 OK
+- `bookingId` present in returned list
+- DeskId matches previously booked desk
+
+---
+
+# ✅ Extended Flow Summary
+
+```mermaid
+graph TD
+    A[Login] --> B[User Profile]
+    B --> C[Floors Verbose]
+    C --> D[Book Desk]
+    D --> E[Desk Progression]
+    D --> F[Negative Scenarios]
+    F --> F1[Intended User]
+    F --> F2[Duplicate Booking]
+    F --> F3[Past Date]
+    F --> F4[Weekend]
+    F --> F5[Invalid DeskId]
+    B --> G[Invalid Profile Email]
+    D --> H[Verify Booking Exists]
+```
