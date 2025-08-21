@@ -408,30 +408,6 @@ GET /tririga/rest/GetBookings?userId={{userId}}&recordDate={{date1}}&pageNumber=
 - `bookingId` present in returned list
 - DeskId matches previously booked desk
 
----
-
-# ✅ Complete Flow Summary
-
-```mermaid
-graph TD
-    A[Login] --> B[User Profile]
-    B --> C[Floors Verbose]
-    C --> D[Book Desk - Single]
-    C --> D1[Book Desk - Multiple/Intended User]
-    D --> E[Desk Progression]
-    D1 --> E
-    E --> F[UI Calendar Validation]
-    D --> G[Negative Scenarios]
-    D1 --> G
-    G --> G1[Intended User]
-    G --> G2[Duplicate Booking]
-    G --> G3[Past Date]
-    G --> G4[Weekend]
-    G --> G5[Invalid DeskId]
-    B --> H[Invalid Profile Email]
-    D --> I[Verify Booking Exists]
-    D1 --> I
-```
 
 ---
 
