@@ -14,6 +14,7 @@ This guide documents the **complete flow** for validating TRIRIGA Desk Booking A
 - Step-by-step request sequence
 - JSON request/response examples
 - Captured variables for chaining requests
+- End-to-end validation through UI confirmation
 
 ---
 
@@ -112,9 +113,10 @@ POST /tririga/rest/FloorsVerbose
   <img src="./screenshots/floor.png" alt="FloorsVerbose response">
   <figcaption><strong>Graph:</strong> FloorsVerbose response</figcaption>
 </figure>
+
 ---
 
-# 📅 4. Book a Desk
+# 🪑 4. Book a Desk – Single Date
 
 ```http
 POST /tririga/rest/CreateBooking
@@ -145,6 +147,52 @@ pm.test("BookingId captured", () => pm.expect(pm.environment.get("bookingId")).t
   <img src="./screenshots/bookingID.png" alt="Response showing bookingId">
   <figcaption><strong>Graph:</strong> response showing bookingId</figcaption>
 </figure>
+
+---
+
+# 🪑 4.1 Book a Desk – Intended User & Multiple Dates
+
+```http
+POST /tririga/html/en/default/rest/DeskBooking?action=bookadesk
+```
+
+**Body Example:**
+```json
+{
+  "bookingSource": 1,
+  "userId": "A675131",
+  "deskId": 1769618,
+  "intendedUserDetails": { "userId": "A675131" },
+  "dateList": [
+    { "date": "2025-08-27", "bookingType": 1 },
+    { "date": "2025-08-28", "bookingType": 1 }
+  ]
+}
+```
+
+**Expected:**
+- Response: `201 Created`
+- Response contains `bookingIds` array (one for each date)
+
+**Response Example:**
+```json
+{
+  "bookingIds": [
+    147738335,
+    147738348
+  ]
+}
+```
+
+**Notes:**
+- `intendedUserDetails` allows booking desks for another user (or explicitly confirming the same user)
+- Multiple entries in `dateList` result in multiple bookingIds returned in a single request
+
+<figure>
+  <img src="./screenshots/bookadesk.png" alt="Book a desk response with multiple bookingIds">
+  <figcaption><strong>Graph:</strong> Successful booking response with multiple bookingIds</figcaption>
+</figure>
+
 ---
 
 # 🔄 5. Desk Progression (Check-In / Check-Out)
@@ -172,29 +220,55 @@ PUT /tririga/rest/DeskBooking?action=deskprogression
 
 ---
 
-# ✅ Flow Summary
+# 📅 6. UI Validation – Calendar Verification
+
+**End-to-End Validation:**
+Bookings are visible in the **TRIRIGA Calendar** under *Manage Reservations → My Calendar*
+
+**Example Booking Confirmation:**
+- 25th August 2025 → `Book a Desk-04-50C`
+- 26th–28th August 2025 → `Book a Desk-04-39A`
+
+<figure>
+  <img src="./screenshots/CalendarWithBooking.png" alt="TRIRIGA Calendar showing booked desks">
+  <figcaption><strong>Graph:</strong> Calendar view confirming successful desk bookings</figcaption>
+</figure>
+
+**Validation Points:**
+- ✅ API response created booking IDs
+- ✅ Calendar UI shows corresponding reservations
+- ✅ Date mapping accuracy confirmed
+- ✅ End-to-end success of Book a Desk testing validated
+
+---
+
+# ✅ Primary Flow Summary
 
 ```mermaid
 graph TD
   A[Login] --> B[Get User Profile]
   B --> C[Floors Verbose]
-  C --> D[Book a Desk]
+  C --> D[Book a Desk - Single]
+  C --> D1[Book a Desk - Multiple/Intended User]
   D --> E[Desk Progression]
+  D1 --> E
+  E --> F[UI Calendar Validation]
 ```
 
 **Flow Notes:**
 - **Login** → Required once per session
 - **Floors** → Used to capture locationId, floorNumber, groupId
-- **Book Desk** → Mandatory for reservations
+- **Book Desk** → Mandatory for reservations (supports single/multiple dates)
 - **Desk Progression** → Only valid after successful booking
+- **UI Validation** → Confirms end-to-end integration
 
 ---
 
-# ⚠️ 6. Negative & Edge Case Scenarios
+# ⚠️ 7. Negative & Edge Case Scenarios
 
 These scenarios ensure the Desk Booking API correctly handles invalid inputs and business rules.
 
-## 👤 6.1 Book Desk for Another User (Intended User)
+## 👤 7.1 Book Desk for Another User (Intended User)
 
 ```http
 POST /tririga/rest/CreateBooking
@@ -219,7 +293,7 @@ POST /tririga/rest/CreateBooking
 
 ---
 
-## 🔁 6.2 Duplicate Booking (Same Day)
+## 🔁 7.2 Duplicate Booking (Same Day)
 
 ```http
 POST /tririga/rest/CreateBooking
@@ -243,7 +317,7 @@ POST /tririga/rest/CreateBooking
 
 ---
 
-## ⏳ 6.3 Past Date Booking
+## ⏳ 7.3 Past Date Booking
 
 ```http
 POST /tririga/rest/CreateBooking
@@ -265,7 +339,7 @@ POST /tririga/rest/CreateBooking
 
 ---
 
-## 📆 6.4 Weekend Booking
+## 📆 7.4 Weekend Booking
 
 ```http
 POST /tririga/rest/CreateBooking
@@ -287,7 +361,7 @@ POST /tririga/rest/CreateBooking
 
 ---
 
-## ❌ 6.5 Invalid DeskId
+## ❌ 7.5 Invalid DeskId
 
 ```http
 POST /tririga/rest/CreateBooking
@@ -309,7 +383,7 @@ POST /tririga/rest/CreateBooking
 
 ---
 
-## 📧 6.6 Invalid User Profile (Email)
+## 📧 7.6 Invalid User Profile (Email)
 
 ```http
 GET /tririga/rest/UserProfile?email=not_a_valid_email@test.com
@@ -321,9 +395,9 @@ GET /tririga/rest/UserProfile?email=not_a_valid_email@test.com
 
 ---
 
-# 📊 7. Validation Queries (Follow-up)
+# 📊 8. Validation Queries (Follow-up)
 
-## 7.1 Verify Booking Exists
+## 8.1 Verify Booking Exists
 
 ```http
 GET /tririga/rest/GetBookings?userId={{userId}}&recordDate={{date1}}&pageNumber=1&pageSize=50
@@ -336,20 +410,47 @@ GET /tririga/rest/GetBookings?userId={{userId}}&recordDate={{date1}}&pageNumber=
 
 ---
 
-# ✅ Extended Flow Summary
+# ✅ Complete Flow Summary
 
 ```mermaid
 graph TD
     A[Login] --> B[User Profile]
     B --> C[Floors Verbose]
-    C --> D[Book Desk]
+    C --> D[Book Desk - Single]
+    C --> D1[Book Desk - Multiple/Intended User]
     D --> E[Desk Progression]
-    D --> F[Negative Scenarios]
-    F --> F1[Intended User]
-    F --> F2[Duplicate Booking]
-    F --> F3[Past Date]
-    F --> F4[Weekend]
-    F --> F5[Invalid DeskId]
-    B --> G[Invalid Profile Email]
-    D --> H[Verify Booking Exists]
+    D1 --> E
+    E --> F[UI Calendar Validation]
+    D --> G[Negative Scenarios]
+    D1 --> G
+    G --> G1[Intended User]
+    G --> G2[Duplicate Booking]
+    G --> G3[Past Date]
+    G --> G4[Weekend]
+    G --> G5[Invalid DeskId]
+    B --> H[Invalid Profile Email]
+    D --> I[Verify Booking Exists]
+    D1 --> I
 ```
+
+---
+
+# 🎯 Testing Completion Criteria
+
+**Functional Validation:**
+- ✅ Single date booking functionality
+- ✅ Multiple date booking capability
+- ✅ Intended user booking permissions
+- ✅ API response validation (booking IDs generation)
+- ✅ UI integration confirmation through calendar display
+
+**Error Handling Validation:**
+- ✅ Duplicate booking prevention
+- ✅ Past date validation
+- ✅ Weekend booking restrictions
+- ✅ Invalid data handling (deskId, userId)
+
+**End-to-End Integration:**
+- ✅ API-to-Database persistence
+- ✅ Database-to-UI synchronization
+- ✅ Real-time calendar updates
