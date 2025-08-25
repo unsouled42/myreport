@@ -393,6 +393,12 @@ GET /tririga/rest/UserProfile?email=not_a_valid_email@test.com
 - Response: `404 Not Found` or `400 Bad Request`
 - Error message: `"Invalid user email"`
 
+<figure>
+  <img src="./screenshots/badEmail.png" alt="Invalid Email">
+  <figcaption><strong>Graph:</strong> Invalid Email</figcaption>
+</figure>
+
+
 ---
 
 # 📊 8. Validation Queries (Follow-up)
@@ -407,7 +413,6 @@ GET /tririga/rest/GetBookings?userId={{userId}}&recordDate={{date1}}&pageNumber=
 - Response: 200 OK
 - `bookingId` present in returned list
 - DeskId matches previously booked desk
-
 
 ---
 
