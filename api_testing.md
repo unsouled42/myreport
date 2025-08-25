@@ -1046,7 +1046,7 @@ Cookie: JSESSIONID={{JSESSIONID}}
 
 ---
 
-Desk Progression With Invalid Bookingid
+## Desk Progression With Invalid Bookingid
 
 ```http
 PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
