@@ -693,6 +693,71 @@ Cookie: JSESSIONID={{JSESSIONID}}
 
 ---
 
+## ⛔ 7.5 Desk Progression — Check‑in Not Allowed for Past/Invalid Booking (No Active Booking)
+
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Validate that a user **cannot check‑in** using a **bookingId that is not active** (e.g., a past reservation or an ID that no longer exists). The API must return a clear error.
+
+**📤 Request (attempt check‑in for a previous‑date booking):**
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body:**
+```json
+{
+  "bookingId": 26042167,       // reservation from a previous date / not active
+  "deskAction": 0,             // 0 = Check‑in (tenant-specific)
+  "userId": "A778034"
+}
+```
+
+**✅ Expected:**
+- HTTP status: **400 Bad Request**
+- Error JSON:
+
+```json
+{
+  "errorMessage": "booking does not exist!",
+  "errorCode": "TRG-009"
+}
+```
+
+Message text may vary slightly per tenant (e.g., punctuation). The meaning is consistent: **no active booking for this ID**.
+
+**Screenshots:**
+
+- Request and 400 response: 
+<figure>
+  <img src="./screenshots/PreviousDateCheckinRequest.png" alt="Previous Date Check-in Request">
+  <figcaption><strong>Graph:</strong> API request and 400 response for invalid booking ID</figcaption>
+</figure>
+
+
+- Reservation detail (shows historic/past booking id): 
+
+<figure>
+  <img src="./screenshots/PreviousDateID.png" alt="Previous Date Booking ID">
+  <figcaption><strong>Graph:</strong> Historical booking ID details</figcaption>
+</figure>
+
+
+- Calendar (no active booking for check‑in): `./screenshots/PreviousDateCheckIn.png`
+
+<figure>
+  <img src="./screenshots/PreviousDateCheckIn.png" alt="Previous Date Check-in Calendar">
+  <figcaption><strong>Graph:</strong> Calendar showing no active booking for check-in</figcaption>
+</figure>
+
+---
+
 ## ⛔ 7.4 Book a Desk — Advance Booking Window
 
 ```http
