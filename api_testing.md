@@ -703,15 +703,6 @@ Cookie: JSESSIONID={{JSESSIONID}}
 
 ```json
 {
-  "errorMessage": "Only current day check-in is allowed",
-  "errorCode": "TRG-009"
-}
-```
-
-or
-
-```json
-{
   "errorMessage": "Bookable Desk Booking needs to be Checked-In first",
   "errorCode": "TRG-009"
 }
