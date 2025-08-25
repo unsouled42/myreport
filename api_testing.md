@@ -829,6 +829,50 @@ GET /tririga/rest/UserProfile?email=not_a_valid_email@test.com
 
 ---
 
+## Desk Progression — Check‑in Blocked for Past/Inactive Booking (Booking Does Not Exist)
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Ensure a user cannot check‑in using a bookingId that is not active anymore (e.g., a past reservation, cancelled, or invalid ID). The API must reject the request with a clear error.
+
+**📤 Request**
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body**
+```
+{
+  "bookingId": 26042167,     // past/invalid booking id
+  "deskAction": 0,           // 0 = Check-in (tenant specific)
+  "userId": "A778034"
+}
+```
+
+**✅ Expected**
+
+- HTTP status: 400 Bad Request
+- Error JSON:
+```
+{
+  "errorMessage": "Booking does not exist!",
+  "errorCode": "TRG-009"
+}
+
+```
+
+<figure>
+  <img src="./screenshots/deskProgPreviousDateBooking.png" alt="Desk Progression Previous Date Booking Error message">
+  <figcaption><strong>Graph:</strong> Desk Progression Previous Date Booking Error message</figcaption>
+</figure>
+
+---
+
 ## 🚫 7.11 Desk Progression — Organizer Cannot Check‑in for Someone Else (Unauthorized)
 
 ```http
