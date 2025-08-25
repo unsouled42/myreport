@@ -612,6 +612,53 @@ POST /tririga/rest/CreateBooking
 
 ---
 
+## ⛔ 7.4 Book a Desk — Advance Booking Window
+
+```http
+POST /tririga/html/en/default/rest/DeskBooking?action=bookadesk
+```
+
+**Purpose:** Validate that the API enforces the **Advance Booking Period**. When the requested date is **beyond the allowed window**, the request is rejected with a clear policy error.
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+x-api-key: {{xApiKey}}
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**📤 Request (date outside the allowed window):**
+```json
+{
+  "bookingSource": 1,
+  "userId": "{{userId}}",
+  "deskId": {{deskId}},
+  "intendedUserDetails": { "userId": "{{userId}}" },
+  "dateList": [
+    { "date": "2025-09-30", "bookingType": 1 }   // deliberately beyond window
+  ]
+}
+```
+
+**Expected:**
+- HTTP status: **400 Bad Request**
+- Error JSON:
+
+```json
+{
+  "errorMessage": "Requested booking date exceeds advance booking period",
+  "errorCode": "TRG-002"
+}
+```
+
+<figure>
+  <img src="./screenshots/dateExceedsbookingPeriod.png" alt="Date Exceeds">
+  <figcaption><strong>Graph:</strong>Date Exceeds</figcaption>
+</figure>
+
+---
+
 ## 📧 7.6 Invalid User Profile (Email)
 
 ```http
