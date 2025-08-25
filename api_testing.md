@@ -245,6 +245,11 @@ POST /tririga/html/en/default/rest/Metadata?action=availableDesk
 - `deskId` → used for booking requests
 - `deskName` → for reference and validation
 
+<figure>
+  <img src="./screenshots/availableDesk.png" alt="Available Desks">
+  <figcaption><strong>Graph:</strong> Available Desks</figcaption>
+</figure>
+
 ---
 
 # 🪑 4. Book a Desk – Single Date
