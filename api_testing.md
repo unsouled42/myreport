@@ -958,6 +958,50 @@ Cookie: JSESSIONID={{JSESSIONID}}
 
 ---
 
+## 🚫 7.11 Desk Progression — Organizer Cannot Check‑out for Someone Else (Unauthorized)
+
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Ensure the API blocks **check‑out** when the caller is **not the booking owner** (i.e., organizer tries to check‑out a desk **booked for another user**).
+
+**📤 Request:**
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body:**
+```json
+{
+  "bookingId": 147694720,     // booking created for a different user
+  "deskAction": 1,           // 1 = Check-out (tenant specific)
+  "userId": "A778034"        // organizer / not the booking owner
+}
+```
+
+**✅ Expected:**
+- HTTP status: **400 Bad Request**
+- Error JSON indicates lack of permission, typically:
+
+```json
+{
+  "errorMessage": "User not authorized",
+  "errorCode": "TRG-007"
+}
+```
+
+<figure>
+  <img src="./screenshots/CheckOutNotAuthorized.png" alt="UserNotAuthorized">
+  <figcaption><strong>Graph:</strong> Check Out - User Not Authorized error response</figcaption>
+</figure>
+
+---
+
 # 📊 8. Validation Queries (Follow-up)
 
 ## 8.1 Verify Booking Exists
