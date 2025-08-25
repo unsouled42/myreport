@@ -529,6 +529,21 @@ GET /tririga/rest/UserProfile?email=not_a_valid_email@test.com
 - Response: `404 Not Found` or `400 Bad Request`
 - Error message: `"Invalid user email"`
 
+<figure>
+  <img src="./screenshots/badEmail.png" alt="Invalid Email">
+  <figcaption><strong>Graph:</strong> Invalid Email</figcaption>
+</figure>
+
+<figure>
+  <img src="./screenshots/userAID.png" alt="userAID">
+  <figcaption><strong>Graph:</strong> userAID</figcaption>
+</figure>
+
+<figure>
+  <img src="./screenshots/retiredUser.png" alt="Retired User Email">
+  <figcaption><strong>Graph:</strong>Retired User Email</figcaption>
+</figure>
+
 ---
 
 # 📊 8. Validation Queries (Follow-up)
