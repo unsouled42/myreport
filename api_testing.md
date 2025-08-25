@@ -916,6 +916,48 @@ Cookie: JSESSIONID={{JSESSIONID}}
 
 ---
 
+## Desk Progression — Cancel Not Allowed for Past/Inactive Booking (Booking Does Not Exist)
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Confirm the API rejects a cancel/release operation when the bookingId is not active (e.g., past reservation or invalid/cancelled id). The service must return a clear policy error.
+
+**📤 Request**
+
+**Headers**
+```
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body**
+```
+{
+  "bookingId": 26042167,   // past/invalid booking id
+  "deskAction": 2,         // 2 = Cancel (tenant-specific)
+  "userId": "A778034"
+}
+```
+**✅ Expected**
+
+- HTTP status: 400 Bad Request
+- Error JSON:
+```
+{
+  "errorMessage": "Booking does not exist!",
+  "errorCode": "TRG-009"
+}
+```
+
+<figure>
+  <img src="./screenshots/deskprogCancelPrevious.png" alt="Desk Progression Cancel Previous Date Booking Error message">
+  <figcaption><strong>Graph:</strong> Desk Progression Cancel Previous Date Booking Error message</figcaption>
+</figure>
+
+---
+
 # 📊 8. Validation Queries (Follow-up)
 
 ## 8.1 Verify Booking Exists
