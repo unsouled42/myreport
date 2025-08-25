@@ -437,28 +437,6 @@ Bookings are visible in the **TRIRIGA Calendar** under *Manage Reservations → 
 
 ---
 
-# ✅ Primary Flow Summary
-
-```mermaid
-graph TD
-  A[Login] --> B[Get User Profile]
-  B --> C[Floors Verbose]
-  C --> D[Book a Desk - Single]
-  C --> D1[Book a Desk - Multiple/Intended User]
-  D --> E[Desk Progression]
-  D1 --> E
-  E --> F[UI Calendar Validation]
-```
-
-**Flow Notes:**
-- **Login** → Required once per session
-- **Floors** → Used to capture locationId, floorNumber, groupId
-- **Book Desk** → Mandatory for reservations (supports single/multiple dates)
-- **Desk Progression** → Only valid after successful booking
-- **UI Validation** → Confirms end-to-end integration
-
----
-
 # ⚠️ 7. Negative & Edge Case Scenarios
 
 These scenarios ensure the Desk Booking API correctly handles invalid inputs and business rules.
