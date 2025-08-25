@@ -392,7 +392,7 @@ Cookie: JSESSIONID={{JSESSIONID}}
 - Response body is JSON (some tenants return a plain `1` indicating success)
 - The **booking is removed** from the user's Calendar (My Reservations → My Calendar)
 
-**Screenshots (evidence):**
+**Screenshots:**
 - API request & 200 response:
 <figure>
   <img src="./screenshots/deskProgressionRequest.png" alt="Desk Progression Cancel Request">
