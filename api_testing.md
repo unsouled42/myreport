@@ -502,6 +502,47 @@ Cookie: JSESSIONID={{JSESSIONID}}
 
 ---
 
+## ⏳ 7.3 Book a Desk — Invalid User
+
+```http
+POST /tririga/html/en/default/rest/DeskBooking?action=bookadesk
+```
+
+**Purpose:** Validate that the system rejects reservations when using ""invalid"" user ID.
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+x-api-key: {{xApiKey}}
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body Example (Invalid User):**
+```json
+{
+  "bookingSource": 1,
+  "userId": 1234,
+  "deskId": {{deskId}},
+  "intendedUserDetails": { "userId": "{{userId}}" },
+  "dateList": [
+    { "date": "2024-08-20", "bookingType": 1 }
+  ]
+}
+```
+
+**Expected:**
+- Response: `400 Bad Request`
+- Error JSON includes message **errorMessage": "User not found in the system"**
+- No booking is created
+
+<figure>
+  <img src="./screenshots/InvalidUserforbooking.png" alt="Invalid User">
+  <figcaption><strong>Graph:</strong>Invalid User</figcaption>
+</figure>
+
+---
+
 ## 📆 7.4 Weekend Booking
 
 ```http
