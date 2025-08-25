@@ -1264,6 +1264,49 @@ Cookie: JSESSIONID={{JSESSIONID}}
 
 ---
 
+## 🚫 7.11 Desk Progression Without Desk Action Parameter
+
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Ensure the API blocks actions **Without Desk Action Parameter**
+
+**📤 Request:**
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body:**
+```json
+{
+    "bookingId": 26116685,
+    "userId": "A778034"
+}
+```
+
+**✅ Expected:**
+- HTTP status: **400 Bad Request**
+- User should get error message as "Missing required payload parameter."
+
+```json
+{
+  "errorMessage": "Missing required payload parameter.",
+  "errorCode": "TRG-001"
+}
+```
+
+<figure>
+  <img src="./screenshots/DeskProgressionWithoutDeskActionParameter.png" alt="Desk Progression Without Desk Action Parameter">
+  <figcaption><strong>Graph:</strong> Desk Progression Without Desk Action Parameter</figcaption>
+</figure>
+
+---
+
 # 📊 8. Validation Queries (Follow-up)
 
 ## 8.1 Verify Booking Exists
