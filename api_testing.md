@@ -1176,7 +1176,49 @@ Cookie: JSESSIONID={{JSESSIONID}}
 </figure>
 
 ---
+## 🚫 7.11 Desk Progression With Invalid Desk Action
 
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Ensure the API blocks actions With **Invalid Desk Action**
+
+**📤 Request:**
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body:**
+```json
+{
+    "bookingId": 26116685,
+    "deskAction": 7,
+    "userId": "A778034"
+}
+```
+
+**✅ Expected:**
+- HTTP status: **400 Bad Request**
+- User should get error message as "Invalid value for desk action."
+
+```json
+{
+  "errorMessage": "Invalid value for desk action.",
+  "errorCode": "TRG-001"
+}
+```
+
+<figure>
+  <img src="./screenshots/InvalidValueForDeskAction.png" alt="Invalid Value for Desk Action">
+  <figcaption><strong>Graph:</strong> Invalid Value for Desk Action</figcaption>
+</figure>
+
+---
 
 # 📊 8. Validation Queries (Follow-up)
 
