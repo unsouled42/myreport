@@ -132,7 +132,7 @@ if (j.userId) {
 ```
 
 <figure>
-  <img src="./screenshots/userprofile_groups.png" alt="UserProfile response with groups">
+  <img src="./screenshots/userprofile1.png" alt="UserProfile response with groups">
   <figcaption><strong>Graph:</strong> UserProfile response showing groups assigned to user</figcaption>
 </figure>
 
