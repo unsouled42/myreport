@@ -1438,6 +1438,58 @@ Cookie: JSESSIONID={{JSESSIONID}}
 
 ---
 
+## Desk Progression — Organizer Cancels a Desk Booked for Someone Else (Authorized)
+
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Validate that an organizer (or a role with the correct permission) can cancel a reservation that was booked for another user.
+
+**📤 Request:**
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID={{JSESSIONID}}
+
+```
+
+**Body:**
+```json
+{
+  "bookingId": 26374400,   // booking made for another user
+  "deskAction": 2,         // Cancel
+  "userId": "A778034"      // organizer / permitted user
+}
+
+```
+
+**✅ Expected:**
+- HTTP 200 OK
+- Booking disappears from My Calendar (for the booked user) after refresh.
+
+```json
+{
+  "errorMessage": "Missing required payload parameter.",
+  "errorCode": "TRG-001"
+}
+```
+
+<figure>
+  <img src="./screenshots/request.png" alt="API request & 200 response">
+  <figcaption><strong>Graph:</strong> API request & 200 response</figcaption>
+</figure>
+
+<figure>
+  <img src="./screenshots/bookinginfo.png" alt="Reservation detail">
+  <figcaption><strong>Graph:</strong> Reservation detail</figcaption>
+</figure>
+
+---
+
+
 # 📊 8. Validation Queries (Follow-up)
 
 ## 8.1 Verify Booking Exists
