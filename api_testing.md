@@ -403,6 +403,11 @@ GET /tririga/rest/UserProfile?email=not_a_valid_email@test.com
   <figcaption><strong>Graph:</strong> userAID</figcaption>
 </figure>
 
+<figure>
+  <img src="./screenshots/retiredUser.png" alt="Retired User Email">
+  <figcaption><strong>Graph:</strong>Retired User Email</figcaption>
+</figure>
+
 
 ---
 
