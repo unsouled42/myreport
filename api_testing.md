@@ -246,7 +246,7 @@ POST /tririga/html/en/default/rest/Metadata?action=availableDesk
 - `deskName` → for reference and validation
 
 <figure>
-  <img src="./screenshots/availableDesk.png" alt="Available Desks">
+  <img src="./screenshots/availabledesks1.png" alt="Available Desks">
   <figcaption><strong>Graph:</strong> Available Desks</figcaption>
 </figure>
 
