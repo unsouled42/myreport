@@ -1002,6 +1002,51 @@ Cookie: JSESSIONID={{JSESSIONID}}
 
 ---
 
+## 🚫 7.11 Desk Progression — User Cannot Cancel after check in time is passout (Bumped status)
+
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Ensure the API blocks **Cancel** when the check in time is passout **(Bumped status)**
+
+**📤 Request:**
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body:**
+```json
+{
+  "bookingId": 147694720,     // booking created for a different user
+  "deskAction": 2,           // 1 = Check-out (tenant specific)
+  "userId": "A663977"        // organizer
+}
+```
+
+**✅ Expected:**
+- HTTP status: **400 Bad Request**
+- Error JSON indicates lack of permission, typically:
+
+```json
+{
+  "errorMessage": "User not authorized",
+  "errorCode": "TRG-007"
+}
+```
+
+<figure>
+  <img src="./screenshots/PassoutBumpedstatus.png" alt="Passout Bumped status">
+  <figcaption><strong>Graph:</strong> Cancel Passout Bumped status - error response</figcaption>
+</figure>
+
+---
+
+
 # 📊 8. Validation Queries (Follow-up)
 
 ## 8.1 Verify Booking Exists
