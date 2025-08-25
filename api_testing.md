@@ -1307,6 +1307,50 @@ Cookie: JSESSIONID={{JSESSIONID}}
 
 ---
 
+## 🚫 7.11 Desk Progression With Invalid Userid
+
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Ensure the API blocks actions **With Invalid Userid**
+
+**📤 Request:**
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body:**
+```json
+{
+    "bookingId": 26116685,
+    "deskAction": 2,
+    "userId": "A000000"
+}
+```
+
+**✅ Expected:**
+- HTTP status: **400 Bad Request**
+- User should get error message as "User not found in the system."
+
+```json
+{
+  "errorMessage": "User not found in the system.",
+  "errorCode": "TRG-006"
+}
+```
+
+<figure>
+  <img src="./screenshots/DeskProgressionWithInvalidUserid.png" alt="Desk Progression With Invalid Userid">
+  <figcaption><strong>Graph:</strong> Desk Progression With Invalid Userid</figcaption>
+</figure>
+
+---
+
 # 📊 8. Validation Queries (Follow-up)
 
 ## 8.1 Verify Booking Exists
