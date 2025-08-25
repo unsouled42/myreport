@@ -398,6 +398,11 @@ GET /tririga/rest/UserProfile?email=not_a_valid_email@test.com
   <figcaption><strong>Graph:</strong> Invalid Email</figcaption>
 </figure>
 
+<figure>
+  <img src="./screenshots/userAID.png" alt="userAID">
+  <figcaption><strong>Graph:</strong> userAID</figcaption>
+</figure>
+
 
 ---
 
