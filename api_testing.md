@@ -61,26 +61,79 @@ GET /tririga/oslc/login?USERNAME={{username}}&PASSWORD={{password}}
 
 ---
 
-# 👤 2. Get User Profile
+# 👤 2. User Profile – Retrieval of Groups
 
 ```http
-GET /tririga/rest/UserProfile
+GET /tririga/html/en/default/rest/UserProfile?email={{userEmail}}
 ```
 
-**Captured variables:**
-- userId → used for bookings
-- Default groupId
+**Purpose:** Validate that the user profile is valid and retrieve the list of groups assigned to the user. This ensures the user is authorized to perform booking operations.
 
-**Postman Test:**
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+x-api-key: {{xApiKey}}
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body Example (if POST variant is used):**
+```json
+{
+  "email": "JAYANTI.JANU@fidelity.com"
+}
+```
+
+**Expected:**
+- Response: `200 OK`
+- Response JSON contains:
+  - `userId`
+  - `name`
+  - `groups[]` array with groupId / groupName values
+
+**Response Example:**
+```json
+{
+  "defaultGroup": null,
+  "name": "Jayanti Janu",
+  "groups": [
+    {
+      "groupName": "NBH - 20F - Flex",
+      "groupId": 26488302
+    },
+    {
+      "groupName": "NBH - 4CS Desks",
+      "groupId": 25674020
+    },
+    {
+      "groupName": "NBH - Advisor Sales",
+      "groupId": 25674570
+    }
+  ]
+}
+```
+
+**Postman Test Script:**
 ```javascript
 const j = pm.response.json();
-pm.environment.set("userId", j.result?.id);
-pm.test("UserId captured", () => pm.expect(pm.environment.get("userId")).to.exist);
+
+pm.test("Status is 200", () => {
+  pm.expect(pm.response.code).to.eql(200);
+});
+
+pm.test("User has groups assigned", () => {
+  pm.expect(j.groups).to.be.an("array").that.is.not.empty;
+});
+
+// Capture userId for subsequent booking requests
+if (j.userId) {
+  pm.environment.set("userId", j.userId);
+}
 ```
 
 <figure>
-  <img src="./screenshots/userprofile1.png" alt="UserProfile response showing userId">
-  <figcaption><strong>Graph:</strong> UserProfile response showing userId</figcaption>
+  <img src="./screenshots/userprofile_groups.png" alt="UserProfile response with groups">
+  <figcaption><strong>Graph:</strong> UserProfile response showing groups assigned to user</figcaption>
 </figure>
 
 ---
@@ -113,6 +166,84 @@ POST /tririga/rest/FloorsVerbose
   <img src="./screenshots/floor.png" alt="FloorsVerbose response">
   <figcaption><strong>Graph:</strong> FloorsVerbose response</figcaption>
 </figure>
+
+---
+
+# 🔎 3.1 Available Desk – Search & Select
+
+```http
+POST /tririga/html/en/default/rest/Metadata?action=availableDesk
+```
+
+**Purpose:** Return the list of desks available for a given date/site/floor (optionally filtered by group and user).
+
+**Prerequisites:**
+- Login done (JSESSIONID cookie)
+- From previous steps:
+  - `locationId` (building) from **Floors**
+  - `floor` (or `floorNumber`) from **Floors**
+  - `groupId` from **Floors** (and user must belong to it in **User Profile**)
+  - A booking date **within the advance‑booking window** (e.g., 7/14/30 days per tenant)
+
+**Request Body (working example):**
+```json
+{
+  "dateList": [
+    { "date": "2025-08-28", "bookingType": 1 }
+  ],
+  "locationId": 17692536,
+  "floor": 14,
+  "groupId": 25674769,
+  "userId": "A778250",
+  "pageNumber": 1,
+  "pageSize": 10
+}
+```
+
+**Note:** Some tenants accept `floorNumber` instead of `floor`.
+
+**Expected:**
+- Response: `200 OK`
+- JSON with `availableDesk` array (and pagination fields)
+
+**Response Example (truncated):**
+```json
+{
+  "totalRecords": 2,
+  "pageNumber": 1,
+  "pageSize": 10,
+  "availableDesk": [
+    {
+      "locationName": "1000 De La Gauchetiere",
+      "deskName": "14-11A",
+      "locationId": 17692536,
+      "groupId": 25674769,
+      "deskAttributes": ["Laptop"],
+      "floorNumber": 14,
+      "floorName": "14th Floor",
+      "deskId": 17871703
+    },
+    {
+      "locationName": "1000 De La Gauchetiere",
+      "deskName": "14-12A",
+      "locationId": 17692536,
+      "groupId": 25674769,
+      "deskAttributes": [],
+      "floorNumber": 14,
+      "floorName": "14th Floor",
+      "deskId": 17692352
+    }
+  ]
+}
+```
+
+**Common Error Scenarios:**
+- **TRG-002**: Policy error - move the date closer (inside the site's "advance booking" window)
+- **TRG-006/007**: Align `groupId` with the chosen `floor/location` and ensure the user is a member of that group
+
+**Captured Variables:**
+- `deskId` → used for booking requests
+- `deskName` → for reference and validation
 
 ---
 
@@ -393,22 +524,6 @@ GET /tririga/rest/UserProfile?email=not_a_valid_email@test.com
 - Response: `404 Not Found` or `400 Bad Request`
 - Error message: `"Invalid user email"`
 
-<figure>
-  <img src="./screenshots/badEmail.png" alt="Invalid Email">
-  <figcaption><strong>Graph:</strong> Invalid Email</figcaption>
-</figure>
-
-<figure>
-  <img src="./screenshots/userAID.png" alt="userAID">
-  <figcaption><strong>Graph:</strong> userAID</figcaption>
-</figure>
-
-<figure>
-  <img src="./screenshots/retiredUser.png" alt="Retired User Email">
-  <figcaption><strong>Graph:</strong>Retired User Email</figcaption>
-</figure>
-
-
 ---
 
 # 📊 8. Validation Queries (Follow-up)
@@ -423,6 +538,31 @@ GET /tririga/rest/GetBookings?userId={{userId}}&recordDate={{date1}}&pageNumber=
 - Response: 200 OK
 - `bookingId` present in returned list
 - DeskId matches previously booked desk
+
+---
+
+# ✅ Complete Flow Summary
+
+```mermaid
+graph TD
+    A[Login] --> B[User Profile]
+    B --> C[Floors Verbose]
+    C --> D[Book Desk - Single]
+    C --> D1[Book Desk - Multiple/Intended User]
+    D --> E[Desk Progression]
+    D1 --> E
+    E --> F[UI Calendar Validation]
+    D --> G[Negative Scenarios]
+    D1 --> G
+    G --> G1[Intended User]
+    G --> G2[Duplicate Booking]
+    G --> G3[Past Date]
+    G --> G4[Weekend]
+    G --> G5[Invalid DeskId]
+    B --> H[Invalid Profile Email]
+    D --> I[Verify Booking Exists]
+    D1 --> I
+```
 
 ---
 
