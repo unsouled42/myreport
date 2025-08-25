@@ -671,6 +671,59 @@ POST /tririga/rest/CreateBooking
 
 ---
 
+## ⛔ 7.4 Desk Progression — Check‑out Not Allowed Without Check‑in (Future Date)
+
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Validate that a user **cannot check‑out** a reservation **before** having **checked‑in**, and that **future‑dated** bookings cannot be progressed to check‑out.
+
+**📤 Request (attempt check‑out on a future booking without check‑in):**
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body:**
+```json
+{
+  "bookingId": {{bookingId}},   // future-dated booking
+  "deskAction": 1,              // check-out/release action
+  "userId": "{{userId}}"
+}
+```
+
+**✅ Expected:**
+- HTTP status: **400 Bad Request**
+- Error JSON with message indicating **check‑in is required / only current‑day check‑in allowed** (examples)
+
+```json
+{
+  "errorMessage": "Only current day check-in is allowed",
+  "errorCode": "TRG-009"
+}
+```
+
+or
+
+```json
+{
+  "errorMessage": "Bookable Desk Booking needs to be Checked-In first",
+  "errorCode": "TRG-009"
+}
+```
+
+<figure>
+  <img src="./screenshots/checkoutWithoutcheckIn.png" alt="checkoutWithoutcheckIn">
+  <figcaption><strong>Graph:</strong>checkoutWithoutcheckIn</figcaption>
+</figure>
+
+---
+
 ## ⛔ 7.4 Book a Desk — Advance Booking Window
 
 ```http
