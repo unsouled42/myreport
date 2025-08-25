@@ -429,27 +429,52 @@ POST /tririga/rest/CreateBooking
 
 ---
 
-## 🔁 7.2 Duplicate Booking (Same Day)
+## 🔁 7.2 Book a Desk — Desk Already Booked (Same Day)
 
 ```http
-POST /tririga/rest/CreateBooking
+POST /tririga/html/en/default/rest/DeskBooking?action=bookadesk
+```
+
+**Purpose:** Validate the system shows an attention/error message when attempting to book a desk that is **already reserved on the same date**.
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+x-api-key: {{xApiKey}}
+Cookie: JSESSIONID={{JSESSIONID}}
 ```
 
 **Body Example:**
 ```json
 {
-    "userId": "23514135",
-    "deskId": "24212236",
-    "bookingType": "Whole Day",
-    "dateList": ["2025-08-20"]
+  "bookingSource": 1,
+  "userId": "{{userId}}",
+  "deskId": {{deskId}},                // desk already reserved on the target date
+  "intendedUserDetails": { "userId": "{{userId}}" },
+  "dateList": [
+    { "date": "2025-08-26", "bookingType": 1 },
+    { "date": "2025-08-27", "bookingType": 1 }
+  ]
 }
 ```
 
-*(Executed twice with same date/deskId)*
-
 **Expected:**
-- Response: `400 Bad Request`
-- Error message: `"Same Day Booking exists"`
+- HTTP status: **409 Conflict** (or **400** on some tenants)
+- Error JSON with conflict message
+- No booking is created for the conflicting date(s)
+
+**Response Example:**
+```json
+{
+  "errorMessage": "Desk is already booked.",
+  "errorCode": "TRG-004"
+}
+```
+<figure>
+  <img src="./screenshots/alreadybooked.png" alt="Already Booked">
+  <figcaption><strong>Graph:</strong>Already Booked</figcaption>
+</figure>
 
 ---
 
