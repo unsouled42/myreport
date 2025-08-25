@@ -453,25 +453,52 @@ POST /tririga/rest/CreateBooking
 
 ---
 
-## ⏳ 7.3 Past Date Booking
+## ⏳ 7.3 Book a Desk — Past Date Not Allowed
 
 ```http
-POST /tririga/rest/CreateBooking
+POST /tririga/html/en/default/rest/DeskBooking?action=bookadesk
 ```
 
-**Body Example:**
+**Purpose:** Validate that the system rejects reservations when the requested date is in the **past**.
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+x-api-key: {{xApiKey}}
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body Example (past date):**
 ```json
 {
-    "userId": "23514135",
-    "deskId": "24212236",
-    "bookingType": "Whole Day",
-    "dateList": ["2024-08-20"]
+  "bookingSource": 1,
+  "userId": "{{userId}}",
+  "deskId": {{deskId}},
+  "intendedUserDetails": { "userId": "{{userId}}" },
+  "dateList": [
+    { "date": "2024-08-20", "bookingType": 1 }
+  ]
 }
 ```
 
 **Expected:**
 - Response: `400 Bad Request`
-- Error message: `"Past date not allowed"`
+- Error JSON includes message **"Requested date is in past"** (wording may vary slightly)
+- No booking is created
+
+**Response Example:**
+```json
+{
+  "errorMessage": "Requested date is in past",
+  "errorCode": "TRG-XXX"
+}
+```
+
+<figure>
+  <img src="./screenshots/PastDayBooking.png" alt="Past Day Booking">
+  <figcaption><strong>Graph:</strong>Past Day Booking</figcaption>
+</figure>
 
 ---
 
