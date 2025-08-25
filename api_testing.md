@@ -729,9 +729,6 @@ Cookie: JSESSIONID={{JSESSIONID}}
   "errorCode": "TRG-009"
 }
 ```
-
-Message text may vary slightly per tenant (e.g., punctuation). The meaning is consistent: **no active booking for this ID**.
-
 **Screenshots:**
 
 - Request and 400 response: 
@@ -749,7 +746,7 @@ Message text may vary slightly per tenant (e.g., punctuation). The meaning is co
 </figure>
 
 
-- Calendar (no active booking for check‑in): `./screenshots/PreviousDateCheckIn.png`
+- Calendar (no active booking for check‑in):
 
 <figure>
   <img src="./screenshots/PreviousDateCheckIn.png" alt="Previous Date Check-in Calendar">
