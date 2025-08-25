@@ -356,47 +356,58 @@ PUT /tririga/rest/DeskBooking?action=deskprogression
 
 ---
 
-🔄 5.1 Desk Progression — Cancel / Release a Future Booking
-httpPUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
-Purpose: Progress an existing desk reservation: cancel / release (future), or check‑in / check‑out (day‑of), depending on the deskAction sent.
-📤 Request (Cancel a future booking):
-Headers:
+# 🔄 5.1 Desk Progression — Cancel / Release a Future Booking
+
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Progress an existing desk reservation: **cancel / release** (future), or **check‑in / check‑out** (day‑of), depending on the `deskAction` sent.
+
+**📤 Request (Cancel a future booking):**
+
+**Headers:**
+```
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID={{JSESSIONID}}
-Body:
-json{
+```
+
+**Body:**
+```json
+{
   "bookingId": 26042383,
   "deskAction": 2,
   "userId": "A778034"
 }
-deskAction codes (commonly used):
+```
 
-1 → Check‑out / Release (contextual)
-2 → Cancel future booking
-(Your tenant may use the same action id for "release" depending on date/time rules; keep value 2 for cancel as shown above.)
+**deskAction codes (commonly used):**
+- `1` → Check‑out / Release (contextual)
+- `2` → **Cancel** future booking
+- (Your tenant may use the same action id for "release" depending on date/time rules; keep value `2` for cancel as shown above.)
 
-✅ Expected:
+**✅ Expected:**
+- **HTTP 200 OK**
+- Response body is JSON (some tenants return a plain `1` indicating success)
+- The **booking is removed** from the user's Calendar (My Reservations → My Calendar)
 
-HTTP 200 OK
-Response body is JSON (some tenants return a plain 1 indicating success)
-The booking is removed from the user's Calendar (My Reservations → My Calendar)
-
-Screenshots:
-
-API request & 200 response: 
+**Screenshots (evidence):**
+- API request & 200 response:
 <figure>
   <img src="./screenshots/deskProgressionRequest.png" alt="Desk Progression Cancel Request">
   <figcaption><strong>Graph:</strong> API request and 200 response for canceling future booking</figcaption>
 </figure>
 
-Calendar before cancel: 
+
+- Calendar **before** cancel: 
 <figure>
   <img src="./screenshots/deskProgressionCalendarView.png" alt="Calendar Before Cancel">
   <figcaption><strong>Graph:</strong> Calendar view before canceling booking</figcaption>
 </figure>
 
-Calendar after cancel (booking removed): ./screenshots/deskProgressionCalendarview2.png
+
+- Calendar **after** cancel (booking removed): `./screenshots/deskProgressionCalendarview2.png`
 <figure>
   <img src="./screenshots/deskProgressionCalendarview2.png" alt="Calendar After Cancel">
   <figcaption><strong>Graph:</strong> Calendar view after booking cancellation (booking removed)</figcaption>
