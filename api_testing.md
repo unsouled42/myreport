@@ -1052,7 +1052,7 @@ Cookie: JSESSIONID={{JSESSIONID}}
 PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
 ```
 
-**Purpose:** Ensure the API blocks **Cancel** when the check in time is passout **(Bumped status)**
+**Purpose:** Ensure the API blocks **Cancel** whith **invalid** BookingID
 
 **📤 Request:**
 
