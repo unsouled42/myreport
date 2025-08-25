@@ -1046,6 +1046,50 @@ Cookie: JSESSIONID={{JSESSIONID}}
 
 ---
 
+Desk Progression With Invalid Bookingid
+
+```http
+PUT /tririga/html/en/default/rest/DeskBooking?action=deskprogression
+```
+
+**Purpose:** Ensure the API blocks **Cancel** when the check in time is passout **(Bumped status)**
+
+**📤 Request:**
+
+**Headers:**
+```
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID={{JSESSIONID}}
+```
+
+**Body:**
+```json
+{
+  "bookingId": 0000,   
+  "deskAction": 2,           
+  "userId": "A778034"        
+}
+```
+
+**✅ Expected:**
+- HTTP status: **400 Bad Request**
+- User should get error message as "No active booking with given booking ID."
+
+```json
+{
+  "errorMessage": "No active booking with given booking ID",
+  "errorCode": "TRG-006"
+}
+```
+
+<figure>
+  <img src="./screenshots/deskProgressionWithInvalidBookingid.png" alt="Desk Progression With Invalid Bookingid">
+  <figcaption><strong>Graph:</strong> Desk Progression With Invalid Bookingid</figcaption>
+</figure>
+
+---
+
 
 # 📊 8. Validation Queries (Follow-up)
 
