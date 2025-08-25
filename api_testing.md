@@ -870,7 +870,6 @@ Cookie: JSESSIONID={{JSESSIONID}}
   <img src="./screenshots/deskProgPreviousDateBooking.png" alt="Desk Progression Previous Date Booking Error message">
   <figcaption><strong>Graph:</strong> Desk Progression Previous Date Booking Error message</figcaption>
 </figure>
-
 ---
 
 ## 🚫 7.11 Desk Progression — Organizer Cannot Check‑in for Someone Else (Unauthorized)
